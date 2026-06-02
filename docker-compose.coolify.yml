@@ -20,6 +20,19 @@ services:
       interval: 5s
       timeout: 20s
       retries: 10
+    labels:
+      - traefik.http.routers.http-betty-metabase.entryPoints=http
+      - traefik.http.routers.http-betty-metabase.middlewares=redirect-to-https
+      - traefik.http.routers.http-betty-metabase.rule=Host(`betty-metabase.app.t3ai.xyz`) && PathPrefix(`/`)
+      - traefik.http.routers.http-betty-metabase.service=http-betty-metabase
+      - traefik.http.services.http-betty-metabase.loadbalancer.server.port=3000
+      - traefik.http.routers.https-betty-metabase.entryPoints=https
+      - traefik.http.routers.https-betty-metabase.middlewares=gzip
+      - traefik.http.routers.https-betty-metabase.rule=Host(`betty-metabase.app.t3ai.xyz`) && PathPrefix(`/`)
+      - traefik.http.routers.https-betty-metabase.service=https-betty-metabase
+      - traefik.http.routers.https-betty-metabase.tls=true
+      - traefik.http.routers.https-betty-metabase.tls.certresolver=letsencrypt
+      - traefik.http.services.https-betty-metabase.loadbalancer.server.port=3000
 
   postgresql:
     image: postgres:16-alpine
