@@ -1,0 +1,3 @@
+FROM metabase/metabase:latest
+
+ENV MB_SITE_NAME=Betty
