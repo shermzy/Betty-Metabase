@@ -1,9 +1,9 @@
 {
-  "name": "metabase",
+  "name": "rebase",
   "private": true,
   "version": "0.0.0",
-  "description": "Metabase Analytics Report Server",
-  "repository": "https://github.com/metabase/metabase",
+  "description": "Rebase analytics workspace",
+  "repository": "https://github.com/shermzy/Rebase",
   "license": "private",
   "engines": {
     "node": ">=22",

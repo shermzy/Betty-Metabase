@@ -4,12 +4,12 @@ services:
     volumes:
       - /dev/urandom:/dev/random:ro
     environment:
-      - SERVICE_FQDN_METABASE_3000=https://betty-metabase.app.t3ai.xyz
-      - MB_SITE_NAME=Betty
+      - SERVICE_FQDN_METABASE_3000=https://rebase.app.t3ai.xyz
+      - MB_SITE_NAME=Rebase
       - MB_DB_TYPE=postgres
       - MB_DB_HOST=postgresql
       - MB_DB_PORT=5432
-      - MB_DB_DBNAME=${POSTGRESQL_DATABASE:-betty_metabase}
+      - MB_DB_DBNAME=${POSTGRESQL_DATABASE:-rebase}
       - MB_DB_USER=${SERVICE_USER_POSTGRESQL}
       - MB_DB_PASS=${SERVICE_PASSWORD_POSTGRESQL}
     depends_on:
@@ -21,27 +21,27 @@ services:
       timeout: 20s
       retries: 10
     labels:
-      - traefik.http.routers.http-betty-metabase.entryPoints=http
-      - traefik.http.routers.http-betty-metabase.middlewares=redirect-to-https
-      - traefik.http.routers.http-betty-metabase.rule=Host(`betty-metabase.app.t3ai.xyz`) && PathPrefix(`/`)
-      - traefik.http.routers.http-betty-metabase.service=http-betty-metabase
-      - traefik.http.services.http-betty-metabase.loadbalancer.server.port=3000
-      - traefik.http.routers.https-betty-metabase.entryPoints=https
-      - traefik.http.routers.https-betty-metabase.middlewares=gzip
-      - traefik.http.routers.https-betty-metabase.rule=Host(`betty-metabase.app.t3ai.xyz`) && PathPrefix(`/`)
-      - traefik.http.routers.https-betty-metabase.service=https-betty-metabase
-      - traefik.http.routers.https-betty-metabase.tls=true
-      - traefik.http.routers.https-betty-metabase.tls.certresolver=letsencrypt
-      - traefik.http.services.https-betty-metabase.loadbalancer.server.port=3000
+      - traefik.http.routers.http-rebase.entryPoints=http
+      - traefik.http.routers.http-rebase.middlewares=redirect-to-https
+      - traefik.http.routers.http-rebase.rule=Host(`rebase.app.t3ai.xyz`) && PathPrefix(`/`)
+      - traefik.http.routers.http-rebase.service=http-rebase
+      - traefik.http.services.http-rebase.loadbalancer.server.port=3000
+      - traefik.http.routers.https-rebase.entryPoints=https
+      - traefik.http.routers.https-rebase.middlewares=gzip
+      - traefik.http.routers.https-rebase.rule=Host(`rebase.app.t3ai.xyz`) && PathPrefix(`/`)
+      - traefik.http.routers.https-rebase.service=https-rebase
+      - traefik.http.routers.https-rebase.tls=true
+      - traefik.http.routers.https-rebase.tls.certresolver=letsencrypt
+      - traefik.http.services.https-rebase.loadbalancer.server.port=3000
 
   postgresql:
     image: postgres:16-alpine
     volumes:
-      - betty-metabase-postgresql-data:/var/lib/postgresql/data
+      - rebase-postgresql-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=${SERVICE_USER_POSTGRESQL}
       - POSTGRES_PASSWORD=${SERVICE_PASSWORD_POSTGRESQL}
-      - POSTGRES_DB=${POSTGRESQL_DATABASE:-betty_metabase}
+      - POSTGRES_DB=${POSTGRESQL_DATABASE:-rebase}
     healthcheck:
       test:
         - CMD-SHELL
@@ -51,4 +51,4 @@ services:
       retries: 10
 
 volumes:
-  betty-metabase-postgresql-data:
+  rebase-postgresql-data:
