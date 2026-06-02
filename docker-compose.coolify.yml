@@ -4,14 +4,14 @@ services:
     volumes:
       - /dev/urandom:/dev/random:ro
     environment:
-      SERVICE_FQDN_METABASE_3000: https://betty-metabase.app.t3ai.xyz
-      MB_SITE_NAME: Betty
-      MB_DB_TYPE: postgres
-      MB_DB_HOST: postgresql
-      MB_DB_PORT: "5432"
-      MB_DB_DBNAME: ${POSTGRESQL_DATABASE:-betty_metabase}
-      MB_DB_USER: ${SERVICE_USER_POSTGRESQL}
-      MB_DB_PASS: ${SERVICE_PASSWORD_POSTGRESQL}
+      - SERVICE_FQDN_METABASE_3000=https://betty-metabase.app.t3ai.xyz
+      - MB_SITE_NAME=Betty
+      - MB_DB_TYPE=postgres
+      - MB_DB_HOST=postgresql
+      - MB_DB_PORT=5432
+      - MB_DB_DBNAME=${POSTGRESQL_DATABASE:-betty_metabase}
+      - MB_DB_USER=${SERVICE_USER_POSTGRESQL}
+      - MB_DB_PASS=${SERVICE_PASSWORD_POSTGRESQL}
     depends_on:
       postgresql:
         condition: service_healthy
@@ -26,9 +26,9 @@ services:
     volumes:
       - betty-metabase-postgresql-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: ${SERVICE_USER_POSTGRESQL}
-      POSTGRES_PASSWORD: ${SERVICE_PASSWORD_POSTGRESQL}
-      POSTGRES_DB: ${POSTGRESQL_DATABASE:-betty_metabase}
+      - POSTGRES_USER=${SERVICE_USER_POSTGRESQL}
+      - POSTGRES_PASSWORD=${SERVICE_PASSWORD_POSTGRESQL}
+      - POSTGRES_DB=${POSTGRESQL_DATABASE:-betty_metabase}
     healthcheck:
       test:
         - CMD-SHELL
